@@ -9,7 +9,7 @@
     x:Class="GawaNativeGettingStarted.MainPage">
     <StackLayout Orientation="Vertical">
         <WebView BackgroundColor="Aqua" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-            Source="https://qiita.com/search"/>
+            Source="http://eeaab7d6.ngrok.io/"/>
         <!--<Label Text="AAA"></Label>-->
     </StackLayout>
 </ContentPage>
