@@ -11,6 +11,7 @@ namespace GawaNativeGettingStarted
             InitializeComponent();
 
             MainPage = new MainPage();
+            MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
         }
 
         protected override void OnStart()

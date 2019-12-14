@@ -6,10 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:local="clr-namespace:GawaNativeGettingStarted;assembly=GawaNativeGettingStarted"
+    xmlns:effect="clr-namespace:GawaNativeGettingStarted"
     x:Class="GawaNativeGettingStarted.MainPage">
-    <StackLayout Orientation="Vertical">
-        <WebView BackgroundColor="Aqua" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-            Source="http://eeaab7d6.ngrok.io/"/>
-        <!--<Label Text="AAA"></Label>-->
+    <StackLayout Orientation="Vertical" BackgroundColor="#66BB6A">                
+        <StackLayout.Effects>                    
+            <effect:SafeAreaPaddingEffect />                
+        </StackLayout.Effects>
+        <local:GNWebView
+            BackgroundColor="Aqua"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Source="https://eeaab7d6.ngrok.io"/>
     </StackLayout>
 </ContentPage>
