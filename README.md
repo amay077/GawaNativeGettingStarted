@@ -1,31 +1,101 @@
-Xamarin.Forms でガワネイティブアプリを作るときのテンプレートプロジェクトを作る１
-
-今年は専ら Angular で Webアプリを作ったり、ガワネイティブアプリを作ったりしています。
-
-## 概要
-
-最近は、モバイルネイティブアプリよりも SPA/PWA、そしてそれを利用したガワネイティブアプリを推奨している私ですが、ガワネイティブアプリを作る時の「ガワ」には Xamarin(Xamarin.Forms) を採用しています。
-
-ガワネイティブアプリは、Webアプリがネイティブの機能を欲するから採用されるわけで、それを制御するためにWebアプリとネイティブ機能の相互通信が必要になります。
-
-また、「ガワ」は ``WebView`` なわけですが、それがアプリとして自然に振る舞うために、いくつかの「設定」をしてあげる必要があります。
-
-この記事は、そのような「Xamarin(.Forms) でガワネイティブアプリを作るときのリファレンス」になればよいなと思って書きます。
-
-尚、~~Advent Calendar の締め切りに間に合わせるために~~ 意外と情報量が多かったので、前編と後編に分けます。
-今回は前編です。
+Xamarin.Forms でガワネイティブアプリを作るときのテンプレートプロジェクトを作る２
 
 ## 目次
 
-1. 日本語入力時の画面高さの調整
-2. ステータスバー、あるいは SafeArea(ノッチ部)の色
+1. 【第1回】日本語入力時の画面高さの調整
+2. 【第1回】ステータスバー、あるいは SafeArea(ノッチ部)の色
 3. 【次回以降予定】アプリ情報の Web 側への引き渡し
 4. 【次回以降予定】``<input type="xxx">`` への対応
 5. 【次回以降予定】Back ボタンハンドリングの Web 側への移譲
+6. スプラッシュスクリーンおよび初回読み込み時の対応
 
-## 1. 日本語入力時の画面高さの調整
+## 6. スプラッシュスクリーンおよび初回読み込み時の対応
 
-ソフトウェアキーボードが、コンテンツの手前が重なってしまう問題の解決です。
+実体がWebアプリであるため、起動してからアプリが使用可能になるまでに時間がかかるのは、ガワネイティブの弱点の一つです。
+これはなんとかごまかしてユーザーに不快感を与えないようにしたいです。
+
+ガワネイティブの起動にかかるプロセスは大きくわけて２つです。
+
+1. ネイティブアプリとしての起動から最初の画面が表示されるまで
+2. 最初の画面が表示されてから Web ページの読み込みが完了するまで
+
+1 は通常のアプリでも必要なプロセス、2 はガワネイティブ特有の要件です。
+
+まずは 1 を対応します。
+
+### Android の場合
+
+* [Splash Screen - Xamarin | Microsoft Docs](https://docs.microsoft.com/en-us/xamarin/android/user-interface/splash-screen)
+
+こちらを参考にします。
+
+Android 側プロジェクトの ``Resources/drawable/splash.xml`` を追加して、次のように記述します。
+
+**splash.axml**
+
+```xml
+
+```
+
+次に、``Resources/values/colors.xml`` の ``colorPrimaryDark`` の色を Web アプリのテーマ色に合わせます。
+この例では ``#66BB6A`` とします。
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="launcher_background">#FFFFFF</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#66BB6A</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>
+```
+
+前述のリンクでは、スプラッシュスクリーン用の Theme と Activity を作るよう書かれていますが、ガワネイティブの場合少しサボることができます。
+``Resources/values/styles.xml`` を開き、``MainTheme.Base`` に ``android:windowBackground`` を追加します。
+
+**styles.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainTheme" parent="MainTheme.Base">
+    </style>
+    <!-- Base theme applied no matter what API -->
+    <style name="MainTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+        <item name="windowNoTitle">true</item>
+        <!--We will be using the toolbar so no need to show ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!-- Set theme colors from https://aka.ms/material-colors -->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">#2196F3</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">#66BB6A</item>
+        <!-- colorAccent is used as the default value for colorControlActivated
+         which is used to tint widgets -->
+        <item name="colorAccent">#FF4081</item>
+        <!-- You can also set colorControlNormal, colorControlActivated
+         colorControlHighlight and colorSwitchThumbNormal. -->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+    </style>
+    <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#FF4081</item>
+    </style>
+</resources>
+```
+
+これでアプリ起動時に緑のスプラッシュスクリーンが表示されるようになります。
+
+### iOS の場合
+
+iOS プロジェクトには、最初から ``LaunchScreen.storyboard`` がスプラッシュスクリーンとして使用されるよう設定されていますが、色が青になっているので、これを変更します。
+
+``Resources/LaunchScreen.storyboard`` を開いて、``Background`` の色を ``#66BB6A``
+
+
+
 
 これは、
 

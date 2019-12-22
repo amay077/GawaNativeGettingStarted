@@ -8,13 +8,33 @@
     xmlns:local="clr-namespace:GawaNativeGettingStarted;assembly=GawaNativeGettingStarted"
     xmlns:effect="clr-namespace:GawaNativeGettingStarted"
     x:Class="GawaNativeGettingStarted.MainPage">
-    <StackLayout Orientation="Vertical" BackgroundColor="#66BB6A">
+    <StackLayout
+        Orientation="Vertical"
+        VerticalOptions="FillAndExpand"
+        BackgroundColor="#66BB6A">
         <StackLayout.Effects>
             <effect:SafeAreaPaddingEffect />
         </StackLayout.Effects>
         <WebView
+            x:Name="webView"
+            IsVisible="false"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
-            Source="https://eeaab7d6.ngrok.io"/>
+            Source="https://8440f155.ngrok.io"/>
+        <FlexLayout
+            x:Name="progressView"
+            Direction="Column"
+            JustifyContent="Center"
+            VerticalOptions="FillAndExpand">
+            <ActivityIndicator
+                IsRunning="True"
+                Color="White"
+                VerticalOptions="Center" />
+            <Label
+                FontSize="Large"
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                Text="Launching..." />
+        </FlexLayout>
     </StackLayout>
 </ContentPage>

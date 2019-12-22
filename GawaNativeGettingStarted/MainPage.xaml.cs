@@ -16,6 +16,11 @@ namespace GawaNativeGettingStarted
         public MainPage()
         {
             InitializeComponent();
+            webView.Navigated += (s, e) =>
+            {
+                progressView.IsVisible = false;
+                webView.IsVisible = true;
+            };
         }
     }
 }
