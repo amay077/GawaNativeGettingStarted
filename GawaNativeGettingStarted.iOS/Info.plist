@@ -38,5 +38,13 @@
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Fill in a reason why your app needs access to location.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>I need camera.</string>
+	<key>Custom Property</key>
+	<string></string>
+	<key>Custom Property1</key>
+	<string></string>
 </dict>
 </plist>

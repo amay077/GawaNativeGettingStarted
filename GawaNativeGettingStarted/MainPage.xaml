@@ -19,8 +19,7 @@
             x:Name="webView"
             IsVisible="false"
             HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"
-            Source="https://8440f155.ngrok.io"/>
+            VerticalOptions="FillAndExpand"/>
         <FlexLayout
             x:Name="progressView"
             Direction="Column"

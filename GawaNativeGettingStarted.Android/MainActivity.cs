@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Plugin.Permissions;
 
 namespace GawaNativeGettingStarted.Droid
 {
@@ -31,10 +32,13 @@ namespace GawaNativeGettingStarted.Droid
 
             Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>()
                 .UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
